@@ -103,7 +103,7 @@ def reg_day(message):
             bot.send_message(message.from_user.id, "Ошибка в числе, пиши цифрами")
             bot.register_next_step_handler(message, reg_day)
         #    break
-    bot.send_message(message.from_user.id, "Дата рождения "+str(day)+'.'+str(month)+'.'+str(year)+' , верно ?')
+    bot.send_message(message.from_user.id, "Тебя зовут "+name+' '+surname+"Дата рождения "+str(day)+'.'+str(month)+'.'+str(year)+' , верно ?')
     bot.register_next_step_handler(message, reg_age)
 
 def reg_age(message):
