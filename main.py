@@ -61,7 +61,7 @@ def callback_worker(call):
 def get_name(message):
     global name
     name = message.text
-    bot.send_message(message.from_user.id, 'Фамилия ?')
+    bot.send_message(message.from_user.chat.id, 'Фамилия ?')
     bot.register_next_step_handler(message, reg_surname)
 
 def reg_surname(message):
@@ -78,9 +78,9 @@ def reg_year(message):
         except Exception:
             bot.send_message(message.from_user.id, "Ошибка в году, пиши цифрами")
             bot.register_next_step_handler(message, reg_year)
-      #      break
-        bot.send_message(message.from_user.id, "Месяц твоего рождения?")
-        bot.register_next_step_handler(message, reg_month)
+            break
+    bot.send_message(message.from_user.id, "Месяц твоего рождения?")
+    bot.register_next_step_handler(message, reg_month)
 
 def reg_month(message):
     global month
@@ -90,9 +90,9 @@ def reg_month(message):
         except Exception:
             bot.send_message(message.from_user.id, "Ошибка в месяце, пиши цифрами")
             bot.register_next_step_handler(message, reg_month)
-        #    break
-        bot.send_message(message.from_user.id, "Число твоего рождения?")
-        bot.register_next_step_handler(message, reg_day)
+            break
+    bot.send_message(message.from_user.id, "Число твоего рождения?")
+    bot.register_next_step_handler(message, reg_day)
 
 def reg_day(message):
     global day
@@ -102,9 +102,9 @@ def reg_day(message):
         except Exception:
             bot.send_message(message.from_user.id, "Ошибка в числе, пиши цифрами")
             bot.register_next_step_handler(message, reg_day)
-        #    break
-        bot.send_message(message.from_user.id, "Дата рождения "+str(day)+'.'+str(month)+'.'+str(year)+' , верно ?')
-        bot.register_next_step_handler(message, reg_age)
+            break
+    bot.send_message(message.from_user.id, "Дата рождения "+str(day)+'.'+str(month)+'.'+str(year)+' , верно ?')
+    bot.register_next_step_handler(message, reg_age)
 
 def reg_age(message):
     global age
