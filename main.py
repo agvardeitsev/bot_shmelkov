@@ -35,7 +35,7 @@ def start_message(message):
         bot.send_message(message.chat.id, 'Чем могу помочь ?', reply_markup=markup)
     else:
         cursor.execute(f"SELECT name,surname FROM users_bot WHERE id_numb={pipl_id}")
-        bot.send_message(message.chat.id, 'Приветствую '+name+' '+surname)
+        bot.send_message(message.from_user.id, 'Приветствую '+name+' '+surname)
 @bot.message_handler(content_types=['text'])
 def get_text(message):
     if message.text.lower() == 'да' or message.text.lower() == 'готов':
@@ -119,6 +119,8 @@ def reg_age(message):
         connect.commit()
         bot.send_message(message.from_user.id, "Регистрация прошла успешно\nМожно пользоваться сервисом")
         print ('зарегился '+name+' '+surname+' '+str(message.chat.id))
+
+
 
 bot.polling()
 
