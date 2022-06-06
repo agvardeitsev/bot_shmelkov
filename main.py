@@ -4,7 +4,7 @@ import sqlite3
 import datetime
 from datetime import date
 
-name = surname = age = ""
+name = surname = ""
 
 day=month=year=0
 
@@ -78,7 +78,7 @@ def reg_year(message):
         except Exception:
             bot.send_message(message.from_user.id, "Ошибка в году, пиши цифрами")
             bot.register_next_step_handler(message, reg_year)
-      #      break
+            break
     bot.send_message(message.from_user.id, "Месяц твоего рождения?")
     bot.register_next_step_handler(message, reg_month)
 
@@ -90,7 +90,7 @@ def reg_month(message):
         except Exception:
             bot.send_message(message.from_user.id, "Ошибка в месяце, пиши цифрами")
             bot.register_next_step_handler(message, reg_month)
-        #    break
+            break
     bot.send_message(message.from_user.id, "Число твоего рождения?")
     bot.register_next_step_handler(message, reg_day)
 
@@ -102,8 +102,8 @@ def reg_day(message):
         except Exception:
             bot.send_message(message.from_user.id, "Ошибка в числе, пиши цифрами")
             bot.register_next_step_handler(message, reg_day)
-        #    break
-    bot.send_message(message.from_user.id, "Тебя зовут "+name+' '+surname+"Дата рождения "+str(day)+'.'+str(month)+'.'+str(year)+' , верно ?')
+            break
+    bot.send_message(message.from_user.id, "Тебя зовут "+name+' '+surname+", дата рождения "+str(day)+'.'+str(month)+'.'+str(year)+' , верно ?')
     bot.register_next_step_handler(message, reg_age)
 
 def reg_age(message):
@@ -118,7 +118,7 @@ def reg_age(message):
         cursor.execute("INSERT INTO users_bot(id_numb,name,surname,age,day,month,year) VALUES(?,?,?,?,?,?,?);",(pipl_id, name, surname, int(age),int(day),int(month),int(year)))
         connect.commit()
         bot.send_message(message.from_user.id, "Регистрация прошла успешно\nМожно пользоваться сервисом")
-        print ('зарегился '+name+' '+surname)
+        print ('зарегился '+name+' '+surname+' '+str(message.chat.id))
 
 bot.polling()
 
