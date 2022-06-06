@@ -5,7 +5,10 @@ import datetime
 from datetime import date
 
 name = surname = age = ""
-##################################   Приветствие   #########################
+
+day=month=year=0
+
+
 
 bot = telebot.TeleBot('5375695745:AAETNH7ETCPxcaESCy6I3HmweyNbd7I3BPY')
 
@@ -69,21 +72,39 @@ def reg_surname(message):
 
 def reg_year(message):
     global year
-    year= message.text
-    bot.send_message(message.from_user.id, "Месяц твоего рождения?")
-    bot.register_next_step_handler(message, reg_month)
+    while year==0:
+        try:
+            year= int(message.text)
+        except Exception:
+            bot.send_message(message.from_user.id, "Ошибка в году, пиши цифрами")
+            bot.register_next_step_handler(message, reg_year)
+            break
+        bot.send_message(message.from_user.id, "Месяц твоего рождения?")
+        bot.register_next_step_handler(message, reg_month)
 
 def reg_month(message):
     global month
-    month= message.text
-    bot.send_message(message.from_user.id, "Число твоего рождения?")
-    bot.register_next_step_handler(message, reg_day)
+    while month==0:
+        try:
+            month=int(message.text)
+        except Exception:
+            bot.send_message(message.from_user.id, "Ошибка в месяце, пиши цифрами")
+            bot.register_next_step_handler(message, reg_month)
+            break
+        bot.send_message(message.from_user.id, "Число твоего рождения?")
+        bot.register_next_step_handler(message, reg_day)
 
 def reg_day(message):
     global day
-    day=message.text
-    bot.send_message(message.from_user.id, "Дата рождения "+day+'.'+month+'.'+year+' , верно ?')
-    bot.register_next_step_handler(message, reg_age)
+    while day==0:
+        try:
+            day=int(message.text)
+        except Exception:
+            bot.send_message(message.from_user.id, "Ошибка в числе, пиши цифрами")
+            bot.register_next_step_handler(message, reg_day)
+            break
+        bot.send_message(message.from_user.id, "Дата рождения "+str(day)+'.'+str(month)+'.'+str(year)+' , верно ?')
+        bot.register_next_step_handler(message, reg_age)
 
 def reg_age(message):
     global age
@@ -97,6 +118,7 @@ def reg_age(message):
         cursor.execute("INSERT INTO users_bot(id_numb,name,surname,age,day,month,year) VALUES(?,?,?,?,?,?,?);",(pipl_id, name, surname, int(age),int(day),int(month),int(year)))
         connect.commit()
         bot.send_message(message.from_user.id, "Регистрация прошла успешно\nМожно пользоваться сервисом")
+        print ('зарегился '+name+' '+surname)
 
 bot.polling()
 
